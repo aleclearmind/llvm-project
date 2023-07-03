@@ -17,6 +17,7 @@
 #ifndef LLVM_ADT_STLEXTRAS_H
 #define LLVM_ADT_STLEXTRAS_H
 
+#include "llvm/ADT/ADL.h"
 #include "llvm/ADT/Hashing.h"
 #include "llvm/ADT/STLForwardCompat.h"
 #include "llvm/ADT/STLFunctionalExtras.h"
@@ -45,21 +46,6 @@
 #endif
 
 namespace llvm {
-
-// Only used by compiler if both template types are the same.  Useful when
-// using SFINAE to test for the existence of member functions.
-template <typename T, T> struct SameType;
-
-namespace detail {
-
-template <typename RangeT>
-using IterOfRange = decltype(std::begin(std::declval<RangeT &>()));
-
-template <typename RangeT>
-using ValueOfRange =
-    std::remove_reference_t<decltype(*std::begin(std::declval<RangeT &>()))>;
-
-} // end namespace detail
 
 //===----------------------------------------------------------------------===//
 //     Extra additions to <type_traits>
