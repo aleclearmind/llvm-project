@@ -257,6 +257,14 @@ TEST(STLExtrasTest, EnumerateLifetimeSemanticsLValue) {
   EXPECT_EQ(1, Destructors);
 }
 
+std::vector<int>::const_reverse_iterator rbegin(const some_struct &s) {
+  return s.data.rbegin();
+}
+
+std::vector<int>::const_reverse_iterator rend(const some_struct &s) {
+  return s.data.rend();
+}
+
 TEST(STLExtrasTest, CountAdaptor) {
   std::vector<int> v;
 
@@ -389,6 +397,8 @@ TEST(STLExtrasTest, ADLTest) {
 
   EXPECT_EQ(*adl_begin(s), 1);
   EXPECT_EQ(*(adl_end(s) - 1), 5);
+  EXPECT_EQ(*adl_rbegin(s), 5);
+  EXPECT_EQ(*(adl_rend(s) - 1), 1);
 
   adl_swap(s, s2);
   EXPECT_EQ(s.swap_val, "lhs");
