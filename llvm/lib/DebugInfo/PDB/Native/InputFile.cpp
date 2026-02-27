@@ -6,6 +6,8 @@
 //
 //===----------------------------------------------------------------------===//
 
+#pragma clang optimize off
+
 #include "llvm/DebugInfo/PDB/Native/InputFile.h"
 
 #include "llvm/BinaryFormat/Magic.h"

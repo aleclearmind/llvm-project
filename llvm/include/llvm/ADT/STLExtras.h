@@ -319,48 +319,6 @@ public:
 
 } // namespace callable_detail
 
-namespace adl_detail {
-
-using std::begin;
-
-template <typename ContainerTy>
-decltype(auto) adl_begin(ContainerTy &&container) {
-  return begin(std::forward<ContainerTy>(container));
-}
-
-using std::end;
-
-template <typename ContainerTy>
-decltype(auto) adl_end(ContainerTy &&container) {
-  return end(std::forward<ContainerTy>(container));
-}
-
-using std::swap;
-
-template <typename T>
-void adl_swap(T &&lhs, T &&rhs) noexcept(noexcept(swap(std::declval<T>(),
-                                                       std::declval<T>()))) {
-  swap(std::forward<T>(lhs), std::forward<T>(rhs));
-}
-
-} // end namespace adl_detail
-
-template <typename ContainerTy>
-decltype(auto) adl_begin(ContainerTy &&container) {
-  return adl_detail::adl_begin(std::forward<ContainerTy>(container));
-}
-
-template <typename ContainerTy>
-decltype(auto) adl_end(ContainerTy &&container) {
-  return adl_detail::adl_end(std::forward<ContainerTy>(container));
-}
-
-template <typename T>
-void adl_swap(T &&lhs, T &&rhs) noexcept(
-    noexcept(adl_detail::adl_swap(std::declval<T>(), std::declval<T>()))) {
-  adl_detail::adl_swap(std::forward<T>(lhs), std::forward<T>(rhs));
-}
-
 /// Returns true if the given container only contains a single element.
 template <typename ContainerTy> bool hasSingleElement(ContainerTy &&C) {
   auto B = std::begin(C), E = std::end(C);
